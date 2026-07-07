@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+#define VEHICLE_NAME "Caterpillar 323 excavator (use "FLYSKY_FS_I6S_EXCAVATOR" remote profile)"
+
 // Vehicle specific settings for sound, lights, ESC, transmission. This is a vehicle specific file.
 
 // Sound files (22'050 Hz, 8 bit PCM recommended) -----------------------------------------------------------------------
@@ -141,6 +143,18 @@ volatile int hydraulicFlowVolumePercentage = 120; // Adjust the volume (usually 
 // Choose the track rattle sound (uncomment the one you want) --------
 volatile int trackRattleVolumePercentage = 150; // Adjust the volume (usually = 150%)
 #include "sounds/Caterpillar323TrackRattle.h" // Caterpillar 323 excavator
+
+#define TRACK_RATTLE_2 // If you want to use a second track rattle sound, which is played with a delay after the first one, to create a more realistic effect
+// Choose the track rattle 2 sound (uncomment the one you want) --------
+volatile int trackRattle2VolumePercentage = 150; // Adjust the volume (usually = 150%)
+const uint16_t pwmStrokeChainDriveTopSpeed = 500; //Hobbywing 1060 ESC reaches top speed at about 1800 or 1200. 1500 is neutral. This means 1500 +/- 300
+const uint16_t pwmStrokeChainDriveStartRotation = 68; // Hobbywing 1060 ESC starts to move at 1500 + this value
+const uint16_t trackRattleIntervalMin = 90; // Interval for top speed (never less than the sample duration of the track rattle sound)
+const uint16_t trackRattleIntervalMax = 500; // Maximum interval between track rattle sounds for slow speed
+#ifdef TRACK_RATTLE_2
+//#include "sounds/D6TrackRattle_100ms.h" // CAT D6 dozer track rattle
+#include "sounds/D6TrackRattle_80ms.h" // CAT D6 dozer track rattle
+#endif
 
 // Choose the bucket rattle sound (uncomment the one you want) --------
 volatile int bucketRattleVolumePercentage = 160; // Adjust the volume (usually = 160%)
